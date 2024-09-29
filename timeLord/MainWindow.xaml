@@ -1,0 +1,127 @@
+﻿<Window x:Class="ClockApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Clock" Height="350" Width="525">
+
+    <Window.Resources>
+        <!-- Шаблон кнопки с закругленными углами -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FF007ACC"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="1" 
+                                CornerRadius="5" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF005A9E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для цифровых часов -->
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#FF2D2D2D"/>
+            <Setter Property="FontSize" Value="30"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <!-- Цифровые часы -->
+        <TextBlock x:Name="DigitalClock" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0"/>
+
+        <!-- Аналоговые часы -->
+        <Canvas x:Name="AnalogClock" Width="200" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <!-- Фоновые круги и разметка часов -->
+            <Ellipse Width="200" Height="200" Stroke="Black" StrokeThickness="4">
+                <!-- Градиент и тень для аналоговых часов -->
+                <Ellipse.Fill>
+                    <RadialGradientBrush>
+                        <GradientStop Color="White" Offset="0"/>
+                        <GradientStop Color="#FF007ACC" Offset="1"/>
+                    </RadialGradientBrush>
+                </Ellipse.Fill>
+                <Ellipse.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="10" Direction="320" ShadowDepth="5"/>
+                </Ellipse.Effect>
+            </Ellipse>
+
+            <!-- Разметка для часов -->
+            <Canvas>
+                <!-- Разметка для 12 часов -->
+                <Line X1="100" Y1="20" X2="100" Y2="35" Stroke="Black" StrokeThickness="2"/>
+                <!-- 12 часов -->
+                <Line X1="100" Y1="165" X2="100" Y2="180" Stroke="Black" StrokeThickness="2"/>
+                <!-- 6 часов -->
+                <Line X1="20" Y1="100" X2="35" Y2="100" Stroke="Black" StrokeThickness="2"/>
+                <!-- 9 часов -->
+                <Line X1="165" Y1="100" X2="180" Y2="100" Stroke="Black" StrokeThickness="2"/>
+                <!-- 3 часа -->
+
+                <!-- Разметка для остальных часов (по углам) -->
+                <Line X1="143" Y1="35" X2="135" Y2="45" Stroke="Black" StrokeThickness="2"/>
+                <!-- 1 час -->
+                <Line X1="165" Y1="57" X2="155" Y2="65" Stroke="Black" StrokeThickness="2"/>
+                <!-- 2 часа -->
+                <Line X1="165" Y1="143" X2="155" Y2="135" Stroke="Black" StrokeThickness="2"/>
+                <!-- 4 часа -->
+                <Line X1="143" Y1="165" X2="135" Y2="155" Stroke="Black" StrokeThickness="2"/>
+                <!-- 5 часов -->
+
+                <Line X1="57" Y1="165" X2="65" Y2="155" Stroke="Black" StrokeThickness="2"/>
+                <!-- 7 часов -->
+                <Line X1="35" Y1="143" X2="45" Y2="135" Stroke="Black" StrokeThickness="2"/>
+                <!-- 8 часов -->
+                <Line X1="35" Y1="57" X2="45" Y2="65" Stroke="Black" StrokeThickness="2"/>
+                <!-- 10 часов -->
+                <Line X1="57" Y1="35" X2="65" Y2="45" Stroke="Black" StrokeThickness="2"/>
+                <!-- 11 часов -->
+            </Canvas>
+
+            <!-- Часовая стрелка -->
+            <Line x:Name="HourHand" X1="100" Y1="100" X2="100" Y2="60" Stroke="Black" StrokeThickness="5">
+                <Line.RenderTransform>
+                    <RotateTransform x:Name="RotateTransformHourHand" CenterX="100" CenterY="100"/>
+                </Line.RenderTransform>
+            </Line>
+
+            <!-- Минутная стрелка -->
+            <Line x:Name="MinuteHand" X1="100" Y1="100" X2="100" Y2="40" Stroke="Black" StrokeThickness="3">
+                <Line.RenderTransform>
+                    <RotateTransform x:Name="RotateTransformMinuteHand" CenterX="100" CenterY="100"/>
+                </Line.RenderTransform>
+            </Line>
+
+            <!-- Секундная стрелка -->
+            <Line x:Name="SecondHand" X1="100" Y1="100" X2="100" Y2="30" Stroke="Red" StrokeThickness="2">
+                <Line.RenderTransform>
+                    <RotateTransform x:Name="RotateTransformSecondHand" CenterX="100" CenterY="100"/>
+                </Line.RenderTransform>
+            </Line>
+        </Canvas>
+
+        <!-- Поля для задания времени -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,30">
+            <TextBox x:Name="HoursInput" Width="50" Margin="5" ToolTip="Часы"/>
+            <TextBox x:Name="MinutesInput" Width="50" Margin="5" ToolTip="Минуты"/>
+            <TextBox x:Name="SecondsInput" Width="50" Margin="5" ToolTip="Секунды"/>
+            <Button Content="Set Time" Click="SetTime_Click" Width="100" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>
+
