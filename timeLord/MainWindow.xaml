@@ -3,16 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Clock" Height="350" Width="525">
 
+    <!-- Ресурсы окна - здесь определены стили, которые можно переиспользовать в различных элементах интерфейса -->
     <Window.Resources>
-        <!-- Шаблон кнопки с закругленными углами -->
+        <!-- Стиль для кнопок с закругленными углами и изменением цвета при наведении мыши -->
         <Style TargetType="Button">
             <Setter Property="Background" Value="#FF007ACC"/>
+            <!-- Фоновый цвет кнопки -->
             <Setter Property="Foreground" Value="White"/>
+            <!-- Цвет текста кнопки -->
             <Setter Property="FontWeight" Value="Bold"/>
+            <!-- Жирный текст -->
             <Setter Property="FontSize" Value="16"/>
+            <!-- Размер шрифта текста -->
             <Setter Property="Padding" Value="10,5"/>
+            <!-- Внутренние отступы для кнопки -->
             <Setter Property="Margin" Value="5"/>
+            <!-- Внешний отступ для кнопки -->
             <Setter Property="BorderBrush" Value="Transparent"/>
+            <!-- Граница кнопки прозрачная -->
+
+            <!-- Шаблон для кнопки -->
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -20,10 +30,14 @@
                                 BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="1" 
                                 CornerRadius="5" Padding="{TemplateBinding Padding}">
+                            <!-- Контейнер для содержимого кнопки, выравниваем по центру -->
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
+
+                        <!-- Триггер срабатывает, если мышь находится над кнопкой -->
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
+                                <!-- Меняем фоновый цвет кнопки при наведении -->
                                 <Setter Property="Background" Value="#FF005A9E"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -32,48 +46,59 @@
             </Setter>
         </Style>
 
-        <!-- Стиль для цифровых часов -->
+        <!-- Стиль для цифровых часов (TextBlock), включая шрифт, цвет и размер текста -->
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Arial"/>
+            <!-- Шрифт текста -->
             <Setter Property="FontWeight" Value="Bold"/>
+            <!-- Жирный текст -->
             <Setter Property="Foreground" Value="#FF2D2D2D"/>
+            <!-- Темно-серый цвет текста -->
             <Setter Property="FontSize" Value="30"/>
+            <!-- Размер шрифта -->
         </Style>
     </Window.Resources>
 
+    <!-- Основная сетка (Grid) для организации элементов внутри окна -->
     <Grid>
-        <!-- Цифровые часы -->
+        <!-- Цифровые часы, выравненные по центру сверху -->
         <TextBlock x:Name="DigitalClock" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0"/>
 
-        <!-- Аналоговые часы -->
+        <!-- Аналоговые часы внутри Canvas для ручного размещения элементов -->
         <Canvas x:Name="AnalogClock" Width="200" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <!-- Фоновые круги и разметка часов -->
+            <!-- Основной круг для аналоговых часов -->
             <Ellipse Width="200" Height="200" Stroke="Black" StrokeThickness="4">
-                <!-- Градиент и тень для аналоговых часов -->
+                <!-- Градиент для фона аналоговых часов -->
                 <Ellipse.Fill>
                     <RadialGradientBrush>
                         <GradientStop Color="White" Offset="0"/>
+                        <!-- В центре круг белый -->
                         <GradientStop Color="#FF007ACC" Offset="1"/>
+                        <!-- Края кругов синие -->
                     </RadialGradientBrush>
                 </Ellipse.Fill>
+
+                <!-- Тень для аналоговых часов -->
                 <Ellipse.Effect>
                     <DropShadowEffect Color="Black" BlurRadius="10" Direction="320" ShadowDepth="5"/>
                 </Ellipse.Effect>
             </Ellipse>
 
-            <!-- Разметка для часов -->
+            <!-- Разметка для 12, 3, 6 и 9 часов -->
             <Canvas>
-                <!-- Разметка для 12 часов -->
+                <!-- Верхняя метка (12 часов) -->
                 <Line X1="100" Y1="20" X2="100" Y2="35" Stroke="Black" StrokeThickness="2"/>
-                <!-- 12 часов -->
-                <Line X1="100" Y1="165" X2="100" Y2="180" Stroke="Black" StrokeThickness="2"/>
-                <!-- 6 часов -->
-                <Line X1="20" Y1="100" X2="35" Y2="100" Stroke="Black" StrokeThickness="2"/>
-                <!-- 9 часов -->
-                <Line X1="165" Y1="100" X2="180" Y2="100" Stroke="Black" StrokeThickness="2"/>
-                <!-- 3 часа -->
 
-                <!-- Разметка для остальных часов (по углам) -->
+                <!-- Нижняя метка (6 часов) -->
+                <Line X1="100" Y1="165" X2="100" Y2="180" Stroke="Black" StrokeThickness="2"/>
+
+                <!-- Левая метка (9 часов) -->
+                <Line X1="20" Y1="100" X2="35" Y2="100" Stroke="Black" StrokeThickness="2"/>
+
+                <!-- Правая метка (3 часа) -->
+                <Line X1="165" Y1="100" X2="180" Y2="100" Stroke="Black" StrokeThickness="2"/>
+
+                <!-- Разметка для промежуточных значений (1, 2, 4, 5, 7, 8, 10, 11 часов) -->
                 <Line X1="143" Y1="35" X2="135" Y2="45" Stroke="Black" StrokeThickness="2"/>
                 <!-- 1 час -->
                 <Line X1="165" Y1="57" X2="155" Y2="65" Stroke="Black" StrokeThickness="2"/>
@@ -82,7 +107,6 @@
                 <!-- 4 часа -->
                 <Line X1="143" Y1="165" X2="135" Y2="155" Stroke="Black" StrokeThickness="2"/>
                 <!-- 5 часов -->
-
                 <Line X1="57" Y1="165" X2="65" Y2="155" Stroke="Black" StrokeThickness="2"/>
                 <!-- 7 часов -->
                 <Line X1="35" Y1="143" X2="45" Y2="135" Stroke="Black" StrokeThickness="2"/>
@@ -93,35 +117,44 @@
                 <!-- 11 часов -->
             </Canvas>
 
-            <!-- Часовая стрелка -->
+            <!-- Часовая стрелка (толще, короче) -->
             <Line x:Name="HourHand" X1="100" Y1="100" X2="100" Y2="60" Stroke="Black" StrokeThickness="5">
                 <Line.RenderTransform>
+                    <!-- Трансформация для вращения часовой стрелки относительно центра -->
                     <RotateTransform x:Name="RotateTransformHourHand" CenterX="100" CenterY="100"/>
                 </Line.RenderTransform>
             </Line>
 
-            <!-- Минутная стрелка -->
+            <!-- Минутная стрелка (тоньше, длиннее часовой) -->
             <Line x:Name="MinuteHand" X1="100" Y1="100" X2="100" Y2="40" Stroke="Black" StrokeThickness="3">
                 <Line.RenderTransform>
+                    <!-- Трансформация для вращения минутной стрелки относительно центра -->
                     <RotateTransform x:Name="RotateTransformMinuteHand" CenterX="100" CenterY="100"/>
                 </Line.RenderTransform>
             </Line>
 
-            <!-- Секундная стрелка -->
+            <!-- Секундная стрелка (самая тонкая и длинная, красная) -->
             <Line x:Name="SecondHand" X1="100" Y1="100" X2="100" Y2="30" Stroke="Red" StrokeThickness="2">
                 <Line.RenderTransform>
+                    <!-- Трансформация для вращения секундной стрелки относительно центра -->
                     <RotateTransform x:Name="RotateTransformSecondHand" CenterX="100" CenterY="100"/>
                 </Line.RenderTransform>
             </Line>
         </Canvas>
 
-        <!-- Поля для задания времени -->
+        <!-- Поля для ввода времени пользователем (часы, минуты, секунды) -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,30">
+            <!-- Поле для ввода часов -->
             <TextBox x:Name="HoursInput" Width="50" Margin="5" ToolTip="Часы"/>
+
+            <!-- Поле для ввода минут -->
             <TextBox x:Name="MinutesInput" Width="50" Margin="5" ToolTip="Минуты"/>
+
+            <!-- Поле для ввода секунд -->
             <TextBox x:Name="SecondsInput" Width="50" Margin="5" ToolTip="Секунды"/>
+
+            <!-- Кнопка для установки времени -->
             <Button Content="Set Time" Click="SetTime_Click" Width="100" Margin="5"/>
         </StackPanel>
     </Grid>
 </Window>
-
